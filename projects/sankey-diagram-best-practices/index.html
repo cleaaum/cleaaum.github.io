@@ -6,6 +6,11 @@
     <meta name="description" content="Project 2 - Task Management App">
     <title>Project 2 - Task Management App</title>
     <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -31,7 +36,7 @@
         <div class="container">
             <div class="project-detail">
                 <div class="project-info">
-                    <h1 class="project-title">Sankey Diagram Best Practices</h1>
+                    <h1 class="project-title">Deep Dive on Sankey Diagrams</h1>
                     <p class="project-description">
                         A comprehensive guide and implementation of best practices for creating effective Sankey diagrams.
                         This project explores advanced data visualization techniques for flow diagrams and network representations,
@@ -48,11 +53,810 @@
                             <span class="tech-tag">Data Visualization</span>
                         </div>
                     </div>
+
+                    <article class="paper-content">
+               
+
+                        <section class="paper-section">
+                            <p>A Sankey Diagram is a powerful data visualization tool when used correctly. These visuals represent the flow of values from one stage to another using nodes and links, but can often be misused. This article aims to provide guidance on best practices for choosing a Sankey diagram, offering diverse examples to illustrate its potential. This article will guide the reader in choosing an appropriate dataset to create an effective Sankey Diagram by looking at the nature and the structure of the data. This article also provides starter code that enables the transformation of a dataframe into usable Sankey data for visualization using Plotly Express. By following these best practices and leveraging the provided code, readers can effectively use Sankey Diagrams to gain valuable insights from their data.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>What is a Sankey & Use Case</h3>
+                            <p>Sankey diagrams can be compared to those of flow networks, with a tendency to be acyclic and directed, where the links and nodes are proportional to the flow they carry. The three parameters that make up a Sankey are the nodes, the links, and the link weights. In this article, I will be referring to a set of nodes on the same level as a tier, where a tier can be a column in a dataframe for example, representing a stage in the Sankey.</p>
+
+                           
+
+                            <p>As a member of the Professional Services team, I first came across the Sankey Diagram on a client project that required a way to visualize the flow of a specific resource on a global scale. The goal was to see where a specific resource came from, where it was converted, and where it was shipped off. Supply chain is a great example of when to use a Sankey diagram as it naturally contains a set of stages to visualize. The complexity of coding this Sankey diagram came with allowing the user to select which columns of a pandas dataframe were to be used in the Sankey, meaning the Sankey could have anywhere from 2 to 8 tiers. The user was also able to filter the Sankey by node, change the link weights, which would vary by year, and group the tiers to only display a fixed number of nodes and aggregate the remaining ones into a single node. The following recording shows this particular Dash app in action.</p>
+
+                            <div class="video-embed">
+                                <video controls width="100%" style="border-radius: 8px; margin: 20px 0;">
+                                    <source src="screen_recording.mov" type="video/quicktime">
+                                    <source src="screen_recording.mov" type="video/mp4">
+                                    Your browser does not support the video tag. <a href="screen_recording.mov">Download the video</a> instead.
+                                </video>
+                            </div>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Useful Sankey Diagrams</h3>
+                            <p>Sankeys are best used to visualize the flow of data from one stage to another, but more specifically, to represent how that flow is subdivided at each stage. For example, this could be the flow of resources, money, energy, or information and how it circulates within a country, business, company, or network, respectively. This type of visualization can help highlight bottlenecks, or identify areas of high significance. For instance, consider the <a href="https://www.sankey-diagrams.com/where-does-a-familys-tax-money-go/" target="_blank">example</a> below which demonstrates the distribution of a country's tax resources. The diagram portrays each sector of the distribution along with its respective subcategories, showcasing the movement of money across different stages. This visual example offers readers a clear understanding of the intricate flow of funds with a simple glance at the diagram. For example, one can quickly see how little is spent on Education compared to other categories, or how much is spent on national defense in comparison to veterans benefits.</p>
+
+                            <div class="paper-image">
+                                <img src="us_taxpayer_sankey.jpg" alt="US Taxpayer Sankey Diagram">
+                            </div>
+
+                            <p>Another example of a useful Sankey Diagram is <a href="https://www.sankeyart.com/content/blog/why-a-sankey-diagram-is-the-best-way-to-visualize-an-income-statement/" target="_blank">Apple</a>'s or <a href="https://www.reddit.com/r/dataisbeautiful/comments/12c47wb/oc_lululemons_2022_income_statement_visualized/" target="_blank">Lululemon</a>'s Income Statement. Here, we can easily identify which are the major sources of income for Apple or Lululemon, the proportion of income allocated to expenses, and how the gross profit compares to expenses. Even a quick glance at these diagrams provide a remarkably insightful overview.</p>
+
+                            <div class="paper-image paper-image-full">
+                                <img src="apple_lulu_sankey.png" alt="Apple Lululemon Sankey Diagram">
+                            </div>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>When to avoid Sankeys</h3>
+                            <p>Sankeys should be avoided in a number of cases. For one, if there isn't a natural flow of data, a Sankey is probably not the best visualization. As an example, the following Sankey shows a mapping of countries to Olympic medal distribution. This isn't ideal as the more data there is the more convoluted this chart will be. It's fairly difficult to gain insightful information from this diagram, other than which countries won the most medals and which sport awarded the most medals. In this particular case, a histogram may be more efficient to represent the distribution of medals.</p>
+
+                            <div class="paper-image">
+                                <img src="medal_distribution.png" alt="Medal Distribution Sankey Diagram">
+                            </div>
+
+                            <p style="margin-bottom: 0;">The following example shows another Sankey that doesn't tell much of a story. Again, a mapping of students to grades to classes to grades does not represent a natural flow of data and gets increasingly complex with the number of data points. Also, every student takes every class, which creates a link between every single one of these combinations. There is not much use for a Sankey if all of the nodes are connected.</p>
+
+                            <div class="plotly-chart" style="margin-top: 0;">
+                                <div id="students-grades-sankey" class="plotly-chart-container"></div>
+                            </div>
+
+                            <p>Sankeys should also be avoided for any kind of continuous data, such as time data, unless this has been turned into categorical or discrete data, such as years, or specific time periods. Any dataset that is too large or too sparse should also be avoided.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Natural Structure of Data</h3>
+                            <p>Now, having data that represents a natural set of stages between data points, this doesn't necessarily mean that a Sankey Diagram is always the best visual to use. A reason could be that there are too many data points, which would create a convoluted diagram, or too little. Also, there could just be no natural grouping of data points resulting in a diagram with links from every source node to every target node, creating too much cross over. In the following example, there is a sufficient amount of data to make a decent Sankey Diagram. However, once generated, it seems like all of the stores ship to all of the listed countries. This Diagram does not provide much information even though there are sufficient data points and the data has a natural flow.</p>
+
+                            <div class="plotly-chart">
+                                <div id="stores-countries-sankey" class="plotly-chart-container"></div>
+                            </div>
+
+                            <p>Instead, it may make more sense to have a stacked bar chart to display the breakdown of each company and the countries it ships to. Alternatively, a Sankey could still be used by adding an intermediary group, or a second layer of grouping. By breaking down the data in this fashion we can already start to get more insights on the companies and where they ship to. This way, we can easily see the distinction between domestic and international sales, and their respective breakdowns.</p>
+
+                            <div class="plotly-charts-side-by-side">
+                                <div id="stacked-bar-chart" class="plotly-chart-container-side"></div>
+                                <div id="sankey-with-grouping" class="plotly-chart-container-side"></div>
+                            </div>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Creating a Sankey Diagram in Plotly</h3>
+                            <p>To create a Sankey diagram using Plotly Express, you can use the graph_objects.Sankey function.</p>
+
+                            <p><strong>Note:</strong> Plotly charts can be embedded directly in this page. You can either:</p>
+                            <ul>
+                                <li>Use Plotly.js directly in JavaScript (as shown in the example above)</li>
+                                <li>Export your Python Plotly chart as HTML using <code>fig.write_html("chart.html")</code> and embed the div, or</li>
+                                <li>Use Plotly's <code>fig.to_json()</code> in Python and load it with Plotly.js</li>
+                            </ul>
+                            
+                            <p>The function accepts 4 critical arguments to define the diagram:</p>
+
+                            <ul>
+                                <li><strong>The label</strong> which in actuality are the nodes (i.e: in the previous example a node is "Canada")</li>
+                                <li><strong>The sources</strong>, a list of numbers that indicate the starting point of a link</li>
+                                <li><strong>The targets</strong>, a list of numbers that indicate the endpoint of a link</li>
+                                <li><strong>The values</strong>, a list of numbers that indicate the line thickness of each link. If this is left blank, no links will show up.</li>
+                            </ul>
+
+                            <p>Each node is identified by a unique number, and the link between each node is defined with the source and target properties. As an example, the Sankey diagram on the left with two nodes 'A' and 'B' with one link connecting the two will require the following properties:</p>
+
+                            <ul>
+                                <li>label must be ['A', 'B'], this will automatically assign a number value to each node; 0 for A and 1 for B.</li>
+                                <li>To add the link between those 2 nodes, one must supply [0] to the source property</li>
+                                <li>And [1] to the target property.</li>
+                                <li>The value in this case needs to be a list of the same length as the sources and targets and can be any positive number.</li>
+                            </ul>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Common Issues</h3>
+                            <p>This can be a little bit tricky to implement with larger datasets, but this is code that chat GPT can generate. The tricky part comes with the case where duplicate nodes must be viewed as distinct nodes, which is fairly common, as seen on the right. If not specifically accounted for, this will result in a node looping around itself, instead of creating a direct link.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Getting Started: Code Sample</h3>
+                            <pre><code class="language-python">def generate_sankey_chart_data(df: pd.Dataframe, columns: list, sankey_link_weight: str):
+
+    # list of list: each list are the set of nodes in each tier/column
+    column_values = [df[col] for col in columns]
+
+    # this generates the labels for the sankey by taking all the unique values
+    labels = sum([list(node_values.unique()) for node_values in column_values],[])
+
+    # initializes a dict of dicts (one dict per tier) 
+    link_mappings = {col: {} for col in columns}
+
+    # each dict maps a node to unique number value (same node in different tiers
+    # will have different number values
+    i = 0
+    for col, nodes in zip(columns, column_values):
+        for node in nodes.unique():
+            link_mappings[col][node] = i
+            i = i + 1
+
+    # specifying which columns are serving as sources and which as targets
+    # ie: given 3 df columns (col1 is a source to col2, col2 is target to col1 and 
+    # a source to col 3 and col3 is a target to col2
+    source_nodes = column_values[: len(columns) - 1]
+    target_nodes = column_values[1:]
+    source_cols = columns[: len(columns) - 1]
+    target_cols = columns[1:]
+    links = []
+
+    # loop to create a list of links in the format [((src,tgt),wt),(),()...]
+    for source, target, source_col, target_col in zip(source_nodes, target_nodes, source_cols, target_cols):
+        for val1, val2, link_weight in zip(source, target, df[sankey_link_weight]):
+            links.append(
+                (
+                    (
+                        link_mappings[source_col][val1],
+                        link_mappings[target_col][val2]
+                    ),
+                    link_weight,
+                )
+            )
+
+    # creating a dataframe with 2 columns: for the links (src, tgt) and weights
+    df_links = pd.DataFrame(links, columns=["link", "weight"])
+
+    # aggregating the same links into a single link (by weight)
+    df_links = df_links.groupby(by=["link"], as_index=False).agg({"weight": sum})
+
+    # generating three lists needed for the sankey visual
+    sources = [val[0] for val in df_links["link"]]
+    targets = [val[1] for val in df_links["link"]]
+    weights = df_links["weight"]
+
+    return labels, sources, targets, weights</code></pre>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Conclusion</h3>
+                            <p>Sankey diagrams are a powerful data visualization tool used to represent the flow of values between stages, offering valuable insights into the flow of data. When used with well-structured data, they can help identify patterns, bottlenecks, and significant resource allocation trends. It is important to consider the nature of the dataset and whether it naturally lends itself to a Sankey diagram. With the right data, Sankey diagrams can be a valuable asset in data representation by facilitating the understanding of complex processes and distributions. With the sample Sankey code provided I hope this helps in better understanding how to code a Sankey Diagram as well as when to use a Sankey Diagram.</p>
+                        </section>
+                    </article>
                 </div>
             </div>
         </div>
     </section>
 
     <script src="../../script.js"></script>
+    <script>
+        // Initialize Prism syntax highlighting
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightAll();
+        }
+
+        // Students & Grades Sankey Chart
+        if (typeof Plotly !== 'undefined') {
+            const labels = [
+                "A (4)",
+                "B (3)",
+                "C (7)",
+                "Chemistry 36% (5)",
+                "Biology 36% (5)",
+                "Physics 29% (4)",
+                "Ann 14% (2)",
+                "Ben 21% (3)",
+                "Jill 7% (1)",
+                "Sam 21% (3)",
+                "Tim 14% (2)",
+                "Zoe 21% (3)",
+                "A (4)",
+                "B (3)",
+                "C (7)"
+            ];
+
+            const nodeColors = [
+                "#81C784", "#FFB74D", "#E57373",
+                "#4DD0E1", "#7986CB", "#F06292",
+                "#FF8A65", "#BA68C8", "#4DB6AC",
+                "#AED581", "#FF8A65", "#64B5F6",
+                "#81C784", "#FFB74D", "#E57373"
+            ];
+
+            const sources = [
+                0, 0,  1, 1,  2, 2,
+                3, 3, 3, 3, 3, 3,
+                4, 4, 4, 4, 4, 4,
+                5, 5, 5, 5, 5, 5,
+                6, 7, 8,  9, 9,  10, 10, 11
+            ];
+
+            const targets = [
+                4, 5,  4, 5,  3, 4,
+                6, 7, 8, 9, 10, 11,
+                6, 7, 8, 9, 10, 11,
+                6, 7, 8, 9, 10, 11,
+                14, 14, 14, 13, 14, 12, 13, 12
+            ];
+
+            const values = [
+                1, 3,  2, 1,  5, 2,
+                1, 1, 0, 1, 1, 1,
+                0, 1, 1, 1, 1, 1,
+                1, 1, 0, 1, 0, 1,
+                2, 3, 1, 2, 1, 1, 1, 3
+            ];
+
+            function getLinkColor(sourceIdx, alpha = 0.45) {
+                const sourceColors = {
+                    0: `rgba(129, 199, 132, ${alpha})`,
+                    1: `rgba(255, 183, 77, ${alpha})`,
+                    2: `rgba(229, 115, 115, ${alpha})`,
+                    3: `rgba(77, 208, 225, ${alpha})`,
+                    4: `rgba(121, 134, 203, ${alpha})`,
+                    5: `rgba(240, 98, 146, ${alpha})`,
+                    6: `rgba(255, 138, 101, ${alpha})`,
+                    7: `rgba(186, 104, 200, ${alpha})`,
+                    8: `rgba(77, 182, 172, ${alpha})`,
+                    9: `rgba(174, 213, 129, ${alpha})`,
+                    10: `rgba(255, 138, 101, ${alpha})`,
+                    11: `rgba(100, 181, 246, ${alpha})`
+                };
+                return sourceColors[sourceIdx] || `rgba(158, 158, 158, ${alpha})`;
+            }
+
+            const linkColors = [
+                getLinkColor(0), getLinkColor(0),
+                getLinkColor(1), getLinkColor(1),
+                getLinkColor(2), getLinkColor(2),
+                getLinkColor(3), getLinkColor(3), getLinkColor(3),
+                getLinkColor(3), getLinkColor(3), getLinkColor(3),
+                getLinkColor(4), getLinkColor(4), getLinkColor(4),
+                getLinkColor(4), getLinkColor(4), getLinkColor(4),
+                getLinkColor(5), getLinkColor(5), getLinkColor(5),
+                getLinkColor(5), getLinkColor(5), getLinkColor(5),
+                getLinkColor(6), getLinkColor(7), getLinkColor(8),
+                getLinkColor(9), getLinkColor(9),
+                getLinkColor(10), getLinkColor(10), getLinkColor(11)
+            ];
+
+            const sankeyData = {
+                type: "sankey",
+                arrangement: "snap",
+                node: {
+                    pad: 20,
+                    thickness: 40,
+                    line: {
+                        color: "rgba(255, 255, 255, 0.8)",
+                        width: 2
+                    },
+                    label: labels,
+                    color: nodeColors,
+                    hovertemplate: "<b style='font-size: 15px;'>%{label}</b><br><extra></extra>",
+                    hoverlabel: {
+                        bgcolor: "rgba(255, 255, 255, 0.98)",
+                        bordercolor: "rgba(0, 0, 0, 0.15)",
+                        font: {
+                            size: 15,
+                            family: "'Montserrat', sans-serif",
+                            color: "#1a1a1a"
+                        }
+                    }
+                },
+                link: {
+                    source: sources,
+                    target: targets,
+                    value: values,
+                    color: linkColors,
+                    hovertemplate: "<b style='font-size: 14px;'>%{source.label}</b><br>" +
+                                  "<span style='font-size: 13px;'>↓</span><br>" +
+                                  "<b style='font-size: 14px;'>%{target.label}</b><br>" +
+                                  "<br><span style='font-size: 13px; color: #666;'>Count: <b style='color: #1a1a1a;'>%{value}</b></span><extra></extra>",
+                    hoverlabel: {
+                        bgcolor: "rgba(255, 255, 255, 0.98)",
+                        bordercolor: "rgba(0, 0, 0, 0.15)",
+                        font: {
+                            size: 14,
+                            family: "'Montserrat', sans-serif",
+                            color: "#1a1a1a"
+                        }
+                    }
+                }
+            };
+
+            const layout = {
+                font: {
+                    size: 14,
+                    color: "#2c3e50",
+                    family: "'Montserrat', sans-serif"
+                },
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                margin: {
+                    l: 0,
+                    r: 0,
+                    t: 0,
+                    b: 0
+                },
+                height: 360,
+                annotations: [
+                    {
+                        x: 0.00,
+                        y: -0.08,
+                        xref: "paper",
+                        yref: "paper",
+                        text: "<b>Grade</b>",
+                        showarrow: false,
+                            font: {
+                                size: 15,
+                                color: "#34495e",
+                                family: "'Montserrat', sans-serif"
+                            },
+                        bgcolor: "rgba(255, 255, 255, 0.6)",
+                        bordercolor: "rgba(0, 0, 0, 0.08)",
+                        borderwidth: 1.5,
+                        borderpad: 6,
+                        align: "center"
+                    },
+                    {
+                        x: 0.32,
+                        y: -0.08,
+                        xref: "paper",
+                        yref: "paper",
+                        text: "<b>Class</b>",
+                        showarrow: false,
+                            font: {
+                                size: 15,
+                                color: "#34495e",
+                                family: "'Montserrat', sans-serif"
+                            },
+                        bgcolor: "rgba(255, 255, 255, 0.6)",
+                        bordercolor: "rgba(0, 0, 0, 0.08)",
+                        borderwidth: 1.5,
+                        borderpad: 6,
+                        align: "center"
+                    },
+                    {
+                        x: 0.7,
+                        y: -0.08,
+                        xref: "paper",
+                        yref: "paper",
+                        text: "<b>Student</b>",
+                        showarrow: false,
+                            font: {
+                                size: 15,
+                                color: "#34495e",
+                                family: "'Montserrat', sans-serif"
+                            },
+                        bgcolor: "rgba(255, 255, 255, 0.6)",
+                        bordercolor: "rgba(0, 0, 0, 0.08)",
+                        borderwidth: 1.5,
+                        borderpad: 6,
+                        align: "center"
+                    },
+                    {
+                        x: 1,
+                        y: -0.08,
+                        xref: "paper",
+                        yref: "paper",
+                        text: "<b>Grade</b>",
+                        showarrow: false,
+                            font: {
+                                size: 15,
+                                color: "#34495e",
+                                family: "'Montserrat', sans-serif"
+                            },
+                        bgcolor: "rgba(255, 255, 255, 0.6)",
+                        bordercolor: "rgba(0, 0, 0, 0.08)",
+                        borderwidth: 1.5,
+                        borderpad: 6,
+                        align: "center"
+                    }
+                ]
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: false,
+                displaylogo: false
+            };
+
+            Plotly.newPlot('students-grades-sankey', [sankeyData], layout, config);
+        }
+
+        // Stores to Countries Sankey Chart
+        if (typeof Plotly !== 'undefined') {
+            const storesLabels = [
+                "NeverFair",
+                "TraceStyles",
+                "TunicToday",
+                "Yarnly",
+                "StyleLink",
+                "RunwayReboot",
+                "DawnRise",
+                "Attrifiy",
+                "WimdWorm",
+                "WearBae",
+                "ClothesMaven",
+                "UrbanVintage"
+            ];
+
+            const countriesLabels = [
+                "Canada",
+                "US",
+                "Mexico",
+                "China",
+                "France"
+            ];
+
+            const allLabels = [...storesLabels, ...countriesLabels];
+
+            // Node colors - more subtle/muted versions
+            const nodeColors = [
+                "#A0826D", // NeverFair - muted brown
+                "#A0A0A0", // TraceStyles - softer grey
+                "#D0D0D0", // TunicToday - medium grey
+                "#C8A2C8", // Yarnly - muted purple
+                "#888888", // StyleLink - softer dark grey
+                "#E6D5B8", // RunwayReboot - muted beige
+                "#D4C5A0", // DawnRise - muted yellow
+                "#D4A5B8", // Attrifiy - muted pink
+                "#B0A0C8", // WimdWorm - muted purple-grey
+                "#E0B8C8", // WearBae - muted pink
+                "#D4C0A8", // ClothesMaven - muted beige
+                "#D4C5A0", // UrbanVintage - muted yellow
+                "#B8D4E8", // Canada - muted light blue
+                "#6B9BD1", // US - softer blue
+                "#A8C8D8", // Mexico - muted light blue
+                "#888888", // China - softer dark grey
+                "#7A9BC1"  // France - muted medium blue
+            ];
+
+            // Node border colors - match node colors (darker version for visibility)
+            const nodeBorderColors = nodeColors.map(color => {
+                // Convert hex to RGB, darken slightly, then back to rgba
+                const r = parseInt(color.slice(1, 3), 16);
+                const g = parseInt(color.slice(3, 5), 16);
+                const b = parseInt(color.slice(5, 7), 16);
+                // Darken by 20% for border
+                return `rgba(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)}, 0.8)`;
+            });
+
+            // Sources (store indices: 0-11)
+            // Targets (country indices: 12-16)
+            const sources = [
+                0, 0, 0,  // NeverFair -> Canada, US, Mexico
+                1, 1, 1,  // TraceStyles -> Canada, US, Mexico
+                2, 2, 2,  // TunicToday -> Canada, US, Mexico
+                3, 3,     // Yarnly -> US, Canada
+                4, 4,     // StyleLink -> US, Canada
+                5, 5,     // RunwayReboot -> US, Canada
+                6,        // DawnRise -> US
+                7, 7, 7,  // Attrifiy -> US, Mexico, China
+                8, 8, 8,  // WimdWorm -> China, US, Mexico
+                9, 9,     // WearBae -> France, China
+                10,       // ClothesMaven -> France
+                11        // UrbanVintage -> France
+            ];
+
+            const targets = [
+                12, 13, 14, // NeverFair -> Canada, US, Mexico
+                12, 13, 14, // TraceStyles -> Canada, US, Mexico
+                12, 13, 14, // TunicToday -> Canada, US, Mexico
+                13, 12,     // Yarnly -> US, Canada
+                13, 12,     // StyleLink -> US, Canada
+                13, 12,     // RunwayReboot -> US, Canada
+                13,         // DawnRise -> US
+                13, 14, 15, // Attrifiy -> US, Mexico, China
+                15, 13, 14, // WimdWorm -> China, US, Mexico
+                16, 15,     // WearBae -> France, China
+                16,         // ClothesMaven -> France
+                16          // UrbanVintage -> France
+            ];
+
+            // Values based on thickness descriptions
+            const values = [
+                1, 1, 1,   // NeverFair flows (thin)
+                1, 1, 1,   // TraceStyles flows (thin)
+                1, 1, 1,   // TunicToday flows (thin)
+                5, 2,      // Yarnly -> US (thick), Canada (thin)
+                8, 1,      // StyleLink -> US (thick), Canada (thin)
+                3, 2,      // RunwayReboot -> US, Canada
+                2,         // DawnRise -> US (thin)
+                4, 4, 1,   // Attrifiy -> US, Mexico (medium), China (faint)
+                6, 7, 2,   // WimdWorm -> China (thick), US (thicker), Mexico (thin)
+                4, 2,      // WearBae -> France (medium), China (thin)
+                3,         // ClothesMaven -> France (medium-thin)
+                2          // UrbanVintage -> France (thin)
+            ];
+
+            // Link colors - match the country (target) node colors with transparency
+            const linkColors = targets.map((targetIdx) => {
+                const countryColor = nodeColors[targetIdx];
+                // Convert hex to RGB and add transparency
+                const r = parseInt(countryColor.slice(1, 3), 16);
+                const g = parseInt(countryColor.slice(3, 5), 16);
+                const b = parseInt(countryColor.slice(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, 0.5)`;
+            });
+
+            const storesCountriesData = {
+                type: "sankey",
+                arrangement: "snap",
+                node: {
+                    pad: 20,
+                    thickness: 30,
+                    line: {
+                        color: "transparent",
+                        width: 0
+                    },
+                    label: allLabels,
+                    color: nodeColors,
+                    hovertemplate: "<b>%{label}</b><extra></extra>"
+                },
+                link: {
+                    source: sources,
+                    target: targets,
+                    value: values,
+                    color: linkColors,
+                    hovertemplate: "<b>%{source.label}</b> → <b>%{target.label}</b><br>Value: %{value}<extra></extra>"
+                }
+            };
+
+            const storesCountriesLayout = {
+                font: {
+                    size: 14,
+                    color: "#2c3e50",
+                    family: "'Montserrat', sans-serif"
+                },
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                margin: {
+                    l: 0,
+                    r: 0,
+                    t: 0,
+                    b: 0
+                },
+                height: 400
+            };
+
+            const storesCountriesConfig = {
+                responsive: true,
+                displayModeBar: false,
+                displaylogo: false
+            };
+
+            Plotly.newPlot('stores-countries-sankey', [storesCountriesData], storesCountriesLayout, storesCountriesConfig);
+        }
+
+        // Side-by-side charts: Stacked Bar and Sankey with Grouping
+        if (typeof Plotly !== 'undefined') {
+            // Stacked Bar Chart Data - ordered from highest to lowest total
+            const companies = ["WimdWorm", "Attrifiy", "StyleLink", "Yarnly", "RunwayReboot", "WearBae", 
+                              "NeverFair", "TraceStyles", "ClothesMaven", "TunicToday", "UrbanVintage", "DawnRise"];
+            
+            // Country colors matching the Sankey
+            const countryColors = {
+                "Canada": "#B8D4E8",
+                "US": "#6B9BD1",
+                "Mexico": "#A8C8D8",
+                "China": "#888888",
+                "France": "#7A9BC1"
+            };
+
+            // Sample data - weights by company and country (reordered to match companies array)
+            const stackedBarData = [
+                {
+                    x: companies,
+                    y: [1, 0, 1, 2, 1, 0, 1, 1, 0, 1, 0, 0], // Canada values
+                    name: "Canada",
+                    type: "bar",
+                    marker: { color: countryColors.Canada },
+                    hovertemplate: "<b>%{x}</b><br>Canada: %{y}<extra></extra>"
+                },
+                {
+                    x: companies,
+                    y: [7, 4, 8, 5, 3, 0, 1, 1, 0, 1, 0, 2], // US values
+                    name: "US",
+                    type: "bar",
+                    marker: { color: countryColors.US },
+                    hovertemplate: "<b>%{x}</b><br>US: %{y}<extra></extra>"
+                },
+                {
+                    x: companies,
+                    y: [2, 4, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0], // Mexico values
+                    name: "Mexico",
+                    type: "bar",
+                    marker: { color: countryColors.Mexico },
+                    hovertemplate: "<b>%{x}</b><br>Mexico: %{y}<extra></extra>"
+                },
+                {
+                    x: companies,
+                    y: [6, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0], // China values
+                    name: "China",
+                    type: "bar",
+                    marker: { color: countryColors.China },
+                    hovertemplate: "<b>%{x}</b><br>China: %{y}<extra></extra>"
+                },
+                {
+                    x: companies,
+                    y: [0, 0, 0, 0, 0, 4, 0, 0, 3, 0, 2, 0], // France values
+                    name: "France",
+                    type: "bar",
+                    marker: { color: countryColors.France },
+                    hovertemplate: "<b>%{x}</b><br>France: %{y}<extra></extra>"
+                }
+            ];
+
+            const stackedBarLayout = {
+                font: {
+                    size: 12,
+                    color: "#2c3e50",
+                    family: "'Montserrat', sans-serif"
+                },
+                xaxis: {
+                    title: {
+                        text: "",
+                        font: { family: "'Montserrat', sans-serif", size: 14 }
+                    },
+                    tickangle: -45
+                },
+                yaxis: {
+                    title: {
+                        text: "weight",
+                        font: { family: "'Montserrat', sans-serif", size: 14 }
+                    },
+                    range: [0, 20],
+                    gridcolor: "rgba(0,0,0,0.1)"
+                },
+                barmode: "stack",
+                showlegend: true,
+                legend: {
+                    font: { family: "'Montserrat', sans-serif", size: 12 },
+                    orientation: "h",
+                    y: 1.02,
+                    xanchor: "center",
+                    x: 0.5
+                },
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                margin: { l: 50, r: 20, t: 60, b: 100 },
+                height: 400
+            };
+
+            const stackedBarConfig = {
+                responsive: true,
+                displayModeBar: false,
+                displaylogo: false
+            };
+
+            Plotly.newPlot('stacked-bar-chart', stackedBarData, stackedBarLayout, stackedBarConfig);
+
+            // Sankey with Domestic/International Grouping
+            const sankeyLabels = [
+                // Companies (0-11)
+                "NeverFair", "TraceStyles", "TunicToday", "Yarnly", "StyleLink", "Attrifiy",
+                "WimdWorm", "ClothesMaven", "WearBae", "RunwayReboot", "DawnRise", "UrbanVintage",
+                // Intermediate (12-13)
+                "Domestic", "International",
+                // Countries (14-18)
+                "Canada", "Mexico", "China", "US", "France"
+            ];
+
+            const sankeyNodeColors = [
+                "#A0826D", // NeverFair - muted brown
+                "#A0A0A0", // TraceStyles - softer grey
+                "#D0D0D0", // TunicToday - medium grey (changed from very light grey)
+                "#C8A2C8", // Yarnly - muted purple
+                "#888888", // StyleLink - softer dark grey
+                "#D4A5B8", // Attrifiy - muted pink
+                "#B0A0C8", // WimdWorm - muted purple-grey
+                "#D4C0A8", // ClothesMaven - muted beige
+                "#E0B8C8", // WearBae - muted pink
+                "#E6D5B8", // RunwayReboot - muted beige
+                "#D4C5A0", // DawnRise - muted yellow
+                "#D4C5A0", // UrbanVintage - muted yellow
+                "#6B9BD1", // Domestic - dark blue (US color)
+                "#7A9BC1", // International - medium blue (France color)
+                "#B8D4E8", // Canada
+                "#A8C8D8", // Mexico
+                "#888888", // China
+                "#6B9BD1", // US
+                "#7A9BC1"  // France
+            ];
+
+            // Flows: Companies -> Domestic/International -> Countries
+            const sankeySources = [
+                // Companies to Domestic (US only)
+                4, 4, 6, 7,  // StyleLink, Yarnly, DawnRise, Attrifiy -> Domestic
+                // Companies to International
+                0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 5, 5, 8, 8, 9, 9, 10, 11,  // Various companies -> International
+                // Domestic to US
+                12,
+                // International to countries
+                13, 13, 13, 13  // International -> Canada, Mexico, China, France
+            ];
+
+            const sankeyTargets = [
+                // Companies to Domestic
+                12, 12, 12, 12,
+                // Companies to International
+                13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13,
+                // Domestic to US
+                17,
+                // International to countries
+                14, 15, 16, 18  // Canada, Mexico, China, France (no US)
+            ];
+
+            const sankeyValues = [
+                // Companies to Domestic
+                8, 5, 2, 4,
+                // Companies to International
+                1, 1, 1, 2, 1, 4, 6, 3, 4, 2, 1, 2, 0, 0, 0, 0, 0, 2,
+                // Domestic to US
+                19,
+                // International to countries (total must equal sum of companies to International = 30)
+                4, 8, 9, 9  // Canada, Mexico, China, France (4+8+9+9=30)
+            ];
+
+            // Link colors based on target
+            const sankeyLinkColors = sankeyTargets.map((targetIdx) => {
+                if (targetIdx === 12) { // Domestic
+                    return "rgba(107, 155, 209, 0.4)";
+                } else if (targetIdx === 13) { // International
+                    return "rgba(122, 155, 193, 0.4)";
+                } else {
+                    const countryColor = sankeyNodeColors[targetIdx];
+                    const r = parseInt(countryColor.slice(1, 3), 16);
+                    const g = parseInt(countryColor.slice(3, 5), 16);
+                    const b = parseInt(countryColor.slice(5, 7), 16);
+                    return `rgba(${r}, ${g}, ${b}, 0.4)`;
+                }
+            });
+
+            const sankeyGroupingData = {
+                type: "sankey",
+                arrangement: "snap",
+                node: {
+                    pad: 20,
+                    thickness: 30,
+                    line: {
+                        color: "transparent",
+                        width: 0
+                    },
+                    label: sankeyLabels,
+                    color: sankeyNodeColors,
+                    hovertemplate: "<b>%{label}</b><extra></extra>"
+                },
+                link: {
+                    source: sankeySources,
+                    target: sankeyTargets,
+                    value: sankeyValues,
+                    color: sankeyLinkColors,
+                    hovertemplate: "<b>%{source.label}</b> → <b>%{target.label}</b><br>Value: %{value}<extra></extra>"
+                }
+            };
+
+            const sankeyGroupingLayout = {
+                font: {
+                    size: 12,
+                    color: "#2c3e50",
+                    family: "'Montserrat', sans-serif"
+                },
+                paper_bgcolor: "rgba(0,0,0,0)",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                margin: { l: 0, r: 0, t: 0, b: 0 },
+                height: 350
+            };
+
+            const sankeyGroupingConfig = {
+                responsive: true,
+                displayModeBar: false,
+                displaylogo: false
+            };
+
+            Plotly.newPlot('sankey-with-grouping', [sankeyGroupingData], sankeyGroupingLayout, sankeyGroupingConfig);
+        }
+    </script>
 </body>
 </html>
