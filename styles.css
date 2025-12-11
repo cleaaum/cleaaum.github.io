@@ -253,6 +253,29 @@ body {
     padding: 0;
 }
 
+/* Specific styling for symposium survey methods image to match height */
+a[href*="symposium-survey-methods"] .project-image {
+    padding: 5px;
+}
+
+a[href*="symposium-survey-methods"] .project-image img {
+    object-fit: contain;
+    max-height: 250px;
+    width: auto;
+    margin: 0 auto;
+}
+
+/* Specific styling for Le Wagon Workshop image to show full image */
+a[href*="le-wagon-workshop"] .project-image {
+    padding: 20px;
+}
+
+a[href*="le-wagon-workshop"] .project-image img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
 .project-content {
     flex: 1;
     padding: 24px;
@@ -301,6 +324,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
 }
 
 
@@ -395,6 +419,21 @@ body {
     background-color: #f9f9f9;
 }
 
+/* Dash App Embed Styles */
+.dash-embed {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid var(--border-color);
+}
+
+.dash-embed iframe {
+    width: 100%;
+    min-height: 800px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
 /* Video Embed Styles */
 .video-embed {
     margin: 10px 0;
@@ -482,6 +521,8 @@ body {
 
 .paper-section {
     margin-bottom: 40px;
+    overflow: hidden;
+    /* Contain floated images */
 }
 
 .paper-section h2 {
@@ -584,6 +625,33 @@ body {
     height: auto;
     border-radius: 8px;
     display: block;
+}
+
+/* Newspaper-style image layout - alternating left/right */
+.paper-image.float-left {
+    float: left;
+    width: 40%;
+    max-width: 400px;
+    margin: 15px 25px 15px 0;
+    display: block;
+}
+
+.paper-image.float-left img {
+    width: 100%;
+    max-width: 100%;
+}
+
+.paper-image.float-right {
+    float: right;
+    width: 40%;
+    max-width: 400px;
+    margin: 15px 0 15px 25px;
+    display: block;
+}
+
+.paper-image.float-right img {
+    width: 100%;
+    max-width: 100%;
 }
 
 .paper-image-full {

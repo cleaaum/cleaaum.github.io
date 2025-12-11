@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Le Wagon Workshop">
+    <title>Le Wagon Workshop</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../index.html" class="nav-brand"></a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html" class="nav-link">Home</a></li>
+                <li><a href="../../about.html" class="nav-link">About</a></li>
+                <li><a href="../../projects.html" class="nav-link">Projects</a></li>
+                <li><a href="../../contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Project Detail Section -->
+    <section class="page-content">
+        <div class="container">
+            <div class="project-detail">
+                <div class="project-info">
+                    <h1 class="project-title">Le Wagon Workshop</h1>
+                    <p class="project-description">
+                        A workshop project developed during Le Wagon bootcamp. This project demonstrates practical application of web development and data science skills learned during the program.
+                    </p>
+                    <div class="project-tech-stack">
+                        <h3>Technologies Used</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Dash</span>
+                            <span class="tech-tag">Plotly</span>
+                            <span class="tech-tag">Web Development</span>
+                            <span class="tech-tag">Data Visualization</span>
+                        </div>
+                    </div>
+
+                    <article class="paper-content">
+                        <header class="paper-header">
+                            <h2 class="paper-title">Building Interactive Data Apps with Dash: A Hands-On Workshop</h2>
+                        </header>
+
+                        <section class="paper-section">
+                            <p>Earlier this month, I had the pleasure of leading a hands-on workshop focused on building interactive data applications using the Dash framework at <a href="https://www.lewagon.com/events/building-interactive-web-apps-with-dash-VCmXmZ" target="_blank">Le Wagon coding school</a>. Le Wagon is a leading coding bootcamp that offers intensive, project-based programs in web development and data science, teaching students practical skills through real-world projects and collaborative learning.</p>
+
+                            <div class="paper-image float-right">
+                                <img src="1000053410.jpg" alt="Le Wagon Workshop">
+                            </div>
+
+                            <p>This article recaps the experience, shares insights from the workshop, and offers resources if you'd like to follow along or run your own version.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Why Dash?</h3>
+                            <p>Dash is an open-source Python framework designed for building interactive web apps—without needing to use JavaScript. It's especially suited for data professionals who want to turn their data pipelines and analysis into shareable tools with interactive front ends.</p>
+
+                            <p>We also used Plotly, the powerful graphing library that Dash is built on, to generate rich visualizations across our app.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>What We Covered</h3>
+                            <p>This workshop was built as a code-along session—each participant progressed through a series of structured exercises, building a Dash app from scratch. Each exercise introduced new components or patterns and gradually layered more interactivity and polish into the final product.</p>
+
+                            <div class="paper-image float-left">
+                                <img src="1000053414.jpg" alt="Workshop participants coding">
+                            </div>
+
+                            <h4>Key Libraries Introduced</h4>
+                            <ul>
+                                <li><strong>Dash Core Components (DCC):</strong> Graphs, sliders, dropdowns</li>
+                                <li><strong>Dash Mantine Components (DMC):</strong> Responsive, modern UI elements</li>
+                                <li><strong>Dash Bootstrap Components (DBC):</strong> Layout and theming tools</li>
+                                <li><strong>Dash AG Grid:</strong> High-performance tabular data visualization</li>
+                            </ul>
+
+                            <p>By mixing components from different libraries, participants got a sense of the flexibility Dash offers when it comes to building UI.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Dataset Used</h3>
+                            <p>We used the Netflix Titles dataset, a rich collection of metadata about shows and movies on Netflix. It's approachable and just the right size for interactive dashboards.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>The Exercises</h3>
+                            <p>The workshop was broken down into six progressive exercises, each of which is available in the <a href="https://github.com/cleaaum/Dash-OSS-Workshop" target="_blank">GitHub repo</a>. Here's a high-level overview:</p>
+
+                            <ol style="margin: 15px 0; padding-left: 25px; line-height: 1.8;">
+                                <li><strong>Basic Layout</strong> - Setting up the project and creating a simple Dash layout.</li>
+                                <li><strong>Static Graphs</strong> - Using Plotly to create bar charts and integrate them with the layout.</li>
+                                <li><strong>User Input</strong> - Adding dropdowns and input fields to drive interactivity.</li>
+                                <li><strong>Dynamic Filtering</strong> - Filtering data based on user input and updating visualizations accordingly.</li>
+                                <li><strong>Responsive Layouts</strong> - Leveraging Bootstrap and Mantine for professional-looking design.</li>
+                                <li><strong>AG Grid Integration</strong> - Displaying the dataset in a feature-rich table with sorting, filtering, and formatting.</li>
+                            </ol>
+
+                            <p>Each script included the solution to the previous step, making it easy for participants to catch up if they fell behind.</p>
+
+                            <div class="paper-image float-right">
+                                <img src="IMG_0351.jpg" alt="Workshop in progress">
+                            </div>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Tools and Setup</h3>
+                            <p>The entire workshop environment was built using Python and the following stack:</p>
+                            <ul>
+                                <li>Dash</li>
+                                <li>Plotly</li>
+                                <li>Dash Core Components</li>
+                                <li>Dash Mantine Components</li>
+                                <li>Dash Bootstrap Components</li>
+                                <li>Dash AG Grid</li>
+                            </ul>
+                            <p>Participants only needed basic Python knowledge and could install all requirements with a simple <code>pip install -r requirements.txt</code>.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Takeaways</h3>
+                            <ul>
+                                <li>Dash lets data practitioners build full-stack apps with just Python.</li>
+                                <li>Combining component libraries can drastically improve UX.</li>
+                                <li>Using a simple but rich dataset like Netflix Titles keeps focus on functionality and layout.</li>
+                                <li>Code-along formats are highly effective for onboarding new users to Dash.</li>
+                            </ul>
+
+                            <p>You can find the complete workshop materials, including all exercises and solutions, in the <a href="https://github.com/cleaaum/Dash-OSS-Workshop" target="_blank">GitHub repository</a>.</p>
+
+                            <div class="paper-image float-left">
+                                <img src="IMG_4315.HEIC" alt="Workshop conclusion">
+                            </div>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
