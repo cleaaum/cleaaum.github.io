@@ -70,18 +70,19 @@ body {
     text-decoration: none;
     color: var(--text-secondary);
     font-weight: 400;
-    transition: color 0.2s ease;
     outline: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
+    color: #9CAF88;
 }
 
 .nav-link.active {
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--text-primary);
-    padding-bottom: 2px;
+    text-decoration: underline;
+    text-decoration-color: #9CAF88;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
 }
 
 .nav-toggle {
@@ -117,42 +118,31 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0;
+    gap: 200px;
     position: relative;
 }
 
-.hero-border-wrapper {
-    background: transparent;
-    border: none;
-    padding: 10px;
-    position: relative;
-    z-index: 2;
-    margin-right: -60px;
-}
-
-.hero-rectangle {
-    background-color: #9CAF88;
-    padding: 15px 174px;
+.hero-links {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
     position: relative;
+    z-index: 2;
 }
 
 .hero-link {
-    color: #ffffff;
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 48px;
     font-weight: 400;
-    transition: opacity 0.2s ease;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
     display: block;
     text-align: left;
-    width: 100%;
 }
 
 .hero-link:hover {
-    opacity: 0.8;
+    color: #9CAF88;
 }
 
 .hero-image {
@@ -185,10 +175,7 @@ body {
 
 /* About Section */
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
+    display: block;
 }
 
 .about-text p {
@@ -196,6 +183,18 @@ body {
     font-size: 16px;
     color: var(--text-secondary);
     line-height: 1.8;
+}
+
+.about-text a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: #9CAF88;
+    text-decoration-thickness: 3px;
+}
+
+.about-text a:hover {
+    color: var(--text-secondary);
+    text-decoration-color: #7a8d6a;
 }
 
 .skills h3 {
@@ -343,6 +342,18 @@ a[href*="le-wagon-workshop"] .project-image img {
     color: var(--text-secondary);
 }
 
+.project-description a {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: #9CAF88;
+    text-decoration-thickness: 3px;
+}
+
+.project-description a:hover {
+    color: var(--text-secondary);
+    text-decoration-color: #7a8d6a;
+}
+
 .project-tech-stack h3 {
     font-size: 18px;
     color: var(--text-primary);
@@ -380,12 +391,12 @@ a[href*="le-wagon-workshop"] .project-image img {
     font-weight: 500;
     padding: 8px 0;
     transition: color 0.2s ease;
-    border-bottom: 1px solid transparent;
+    border-bottom: 3px solid #9CAF88;
 }
 
 .paper-link:hover {
     color: var(--text-secondary);
-    border-bottom-color: var(--text-secondary);
+    border-bottom-color: #7a8d6a;
 }
 
 /* Project SVG Styles */
@@ -484,8 +495,7 @@ a[href*="le-wagon-workshop"] .project-image img {
 .plotly-chart-container {
     width: 85%;
     max-width: 85%;
-    min-height: 360px;
-    margin: 0 auto 15px auto;
+    margin: 0;
     padding: 0;
 }
 
@@ -566,11 +576,14 @@ a[href*="le-wagon-workshop"] .project-image img {
 .paper-section a {
     color: var(--text-primary);
     text-decoration: underline;
-    transition: color 0.2s ease;
+    text-decoration-color: #9CAF88;
+    text-decoration-thickness: 3px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .paper-section a:hover {
     color: var(--text-secondary);
+    text-decoration-color: #7a8d6a;
 }
 
 .paper-note {
@@ -597,6 +610,8 @@ a[href*="le-wagon-workshop"] .project-image img {
 .paper-references a {
     color: var(--text-primary);
     text-decoration: underline;
+    text-decoration-color: #9CAF88;
+    text-decoration-thickness: 3px;
 }
 
 .paper-section ul,
@@ -764,9 +779,9 @@ a[href*="le-wagon-workshop"] .project-image img {
     transition: color 0.2s ease;
 }
 
-.contact-item a:hover {
+/* .contact-item a:hover {
     color: var(--text-secondary);
-}
+} */
 
 /* Footer */
 .footer {
@@ -813,9 +828,8 @@ a[href*="le-wagon-workshop"] .project-image img {
         gap: 40px;
     }
 
-    .hero-rectangle {
+    .hero-links {
         margin-right: 0;
-        padding: 20px 40px;
         width: 100%;
         max-width: 400px;
     }
@@ -872,10 +886,6 @@ a[href*="le-wagon-workshop"] .project-image img {
 }
 
 @media (max-width: 480px) {
-    .hero-rectangle {
-        padding: 15px 30px;
-    }
-
     .hero-link {
         font-size: 36px;
     }
