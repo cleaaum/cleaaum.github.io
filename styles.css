@@ -42,13 +42,13 @@ body {
     background-color: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
-    padding: 20px 0;
+    padding: 10px 0;
     outline: none;
 }
 
 .navbar .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -57,13 +57,21 @@ body {
     font-weight: 400;
     color: var(--text-primary);
     text-decoration: none;
+    display: none;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 0;
     outline: none;
+    align-items: center;
+}
+
+.nav-menu li:not(:last-child)::after {
+    content: '·';
+    color: var(--text-secondary);
+    margin: 0 0.25rem;
 }
 
 .nav-link {
@@ -175,6 +183,26 @@ body {
 
 /* About Section */
 .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.about-text {
+    flex: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.about-image {
+    display: flex;
+    justify-content: center;
+}
+
+.about-image img {
+    width: 700px;
+    height: auto;
+    object-fit: cover;
     display: block;
 }
 
@@ -190,30 +218,12 @@ body {
     text-decoration: underline;
     text-decoration-color: #9CAF88;
     text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
 }
 
 .about-text a:hover {
     color: var(--text-secondary);
     text-decoration-color: #7a8d6a;
-}
-
-.skills h3 {
-    font-size: 18px;
-    margin-bottom: 24px;
-    color: var(--text-primary);
-    font-weight: 400;
-}
-
-.skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.skill-tag {
-    font-size: 14px;
-    color: var(--text-secondary);
-    font-weight: 400;
 }
 
 /* Projects Section */
@@ -376,33 +386,10 @@ a[href*="le-wagon-workshop"] .project-image img {
     font-weight: 400;
 }
 
-/* Paper Link Styles */
-.paper-link-section {
-    margin-top: 5px;
-    padding-top: 5px;
-    border-top: 1px solid var(--border-color);
-}
-
-.paper-link {
-    display: inline-block;
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 8px 0;
-    transition: color 0.2s ease;
-    border-bottom: 3px solid #9CAF88;
-}
-
-.paper-link:hover {
-    color: var(--text-secondary);
-    border-bottom-color: #7a8d6a;
-}
-
 /* Project SVG Styles */
 .project-svg {
-    margin-top: 5px;
-    padding-top: 5px;
+    margin-top: 0px;
+    padding: 0;
     border-top: 1px solid var(--border-color);
 }
 
@@ -412,6 +399,8 @@ a[href*="le-wagon-workshop"] .project-image img {
     max-width: 100%;
     display: block;
     border-radius: 4px;
+    margin: 0;
+    padding: 0;
 }
 
 /* PDF Embed Styles */
@@ -779,22 +768,6 @@ a[href*="le-wagon-workshop"] .project-image img {
     transition: color 0.2s ease;
 }
 
-/* .contact-item a:hover {
-    color: var(--text-secondary);
-} */
-
-/* Footer */
-.footer {
-    border-top: 1px solid var(--border-color);
-    padding: 40px 0;
-    text-align: center;
-}
-
-.footer p {
-    color: var(--text-secondary);
-    font-size: 14px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -851,8 +824,19 @@ a[href*="le-wagon-workshop"] .project-image img {
     }
 
     .about-content {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 40px;
+    }
+
+    .about-image {
+        flex: none;
+        justify-content: center;
+    }
+
+    .about-image img {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
     }
 
     .page-content {
