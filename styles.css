@@ -88,21 +88,6 @@ body {
     text-underline-offset: 4px;
 }
 
-.nav-toggle {
-    display: none;
-    flex-direction: column;
-    background: none;
-    border: none;
-    cursor: pointer;
-    gap: 5px;
-    outline: none;
-}
-
-.nav-toggle span {
-    width: 20px;
-    height: 1px;
-    background-color: var(--text-primary);
-}
 
 /* Hero Section */
 .hero {
@@ -787,25 +772,8 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
     }
 
     .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 60px;
-        flex-direction: column;
-        background-color: var(--bg-primary);
-        width: 100%;
-        text-align: left;
-        transition: 0.3s;
-        border-bottom: 1px solid var(--border-color);
-        padding: 24px;
-        gap: 24px;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-toggle {
-        display: flex;
+        gap: 0.25rem;
+        font-size: 14px;
     }
 
     .hero-layout {
