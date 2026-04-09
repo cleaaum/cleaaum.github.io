@@ -5,7 +5,7 @@
 :root {
     --text-primary: #000000;
     --text-secondary: #666666;
-    --bg-primary: #FFFFFF;
+    --bg-primary: #FAFAF8;
     --border-color: #e5e5e5;
 }
 
@@ -35,7 +35,7 @@ body {
     left: 0;
     right: 0;
     background-color: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: none;
     z-index: 1000;
     padding: 10px 0;
     outline: none;
@@ -319,6 +319,8 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .project-info {
@@ -487,16 +489,16 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 }
 
 .paper-header {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--border-color);
+    margin: 0 0 5px 0;
+    padding: 0 0 5px 0;
+    border-bottom: none;
 }
 
 .paper-title {
     font-size: 28px;
     font-weight: 600;
     color: var(--text-primary);
-    margin: 0 0 15px 0;
+    margin: 5px 0;
     line-height: 1.2;
 }
 
@@ -554,7 +556,7 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
     font-size: 16px;
     line-height: 1.8;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin: 0 0 12px 0;
 }
 
 .paper-section a {
