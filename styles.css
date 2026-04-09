@@ -5,7 +5,7 @@
 :root {
     --text-primary: #000000;
     --text-secondary: #666666;
-    --bg-primary: #E6E5E2;
+    --bg-primary: #FFFFFF;
     --border-color: #e5e5e5;
 }
 
@@ -386,12 +386,12 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 }
 
 .project-svg .interactive-svg {
-    width: 100%;
+    width: 90%;
     height: auto;
-    max-width: 100%;
+    max-width: 90%;
     display: block;
     border-radius: 4px;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
 }
 
@@ -487,8 +487,8 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 }
 
 .paper-header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
     border-bottom: 2px solid var(--border-color);
 }
 
@@ -511,17 +511,15 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 }
 
 .paper-section {
-    margin-bottom: 40px;
-    overflow: hidden;
-    /* Contain floated images */
+    margin-bottom: 20px;
 }
 
 .paper-section h2 {
     font-size: 28px;
     font-weight: 600;
     color: var(--text-primary);
-    margin: 0 0 20px 0;
-    padding-top: 20px;
+    margin: 0 0 15px 0;
+    padding-top: 15px;
     border-top: 1px solid var(--border-color);
 }
 
@@ -535,9 +533,14 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
     font-size: 22px;
     font-weight: 600;
     color: var(--text-primary);
-    margin: 30px 0 15px 0;
-    padding-top: 20px;
+    margin: 20px 0 10px 0;
+    padding-top: 15px;
     border-top: 1px solid var(--border-color);
+}
+
+.paper-image.float-left,
+.paper-image.float-right {
+    clear: both;
 }
 
 .paper-section h4 {
@@ -551,7 +554,7 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
     font-size: 16px;
     line-height: 1.8;
     color: var(--text-primary);
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .paper-section a {
@@ -616,8 +619,8 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 }
 
 .paper-image img {
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
+    max-width: 100%;
     height: auto;
     border-radius: 8px;
     display: block;

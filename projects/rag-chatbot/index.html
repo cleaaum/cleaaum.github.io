@@ -38,12 +38,62 @@
                         <div class="tech-tags">
                             <span class="tech-tag">Python</span>
                             <span class="tech-tag">LangChain</span>
-                            <span class="tech-tag">OpenAI GPT</span>
+                            <span class="tech-tag">OpenAI</span>
                             <span class="tech-tag">FAISS</span>
                             <span class="tech-tag">Dash</span>
                             <span class="tech-tag">RAG</span>
                         </div>
                     </div>
+
+                    <article class="paper-content">
+                        <header class="paper-header">
+                            <h2 class="paper-title">Building a RAG Chatbot for Gilead's Data Science Symposium</h2>
+                        </header>
+
+                        <section class="paper-section">
+                            <p>I had the opportunity to present at the Gilead Data Science Conference in San Francisco. Gilead's work in life-saving biopharmaceuticals—from HIV/AIDS to COVID-19—relies heavily on complex clinical trial data. To help their teams navigate this information, we partnered with them to demonstrate how Retrieval-Augmented Generation (RAG) can transform static documentation into interactive, conversational AI using the Dash framework.</p>
+
+              
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Why Dash for AI Applications?</h3>
+                            <p>Dash is an open-source Python framework designed for building interactive web applications. It is easy to use for Python developers because it offers the flexibility of React.js and the robustness of Flask without requiring deep knowledge of JavaScript or CSS.</p>
+
+                            <p>The core strength of Dash lies in its callbacks. These Python-based functions allow the UI to update automatically whenever a user interacts with a component—like a button or a slider. Whether you're building a rapid prototype in a day or a production-grade enterprise application, Dash provides a flexible foundation that integrates seamlessly with databases and Plotly's data visualization suite.</p>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>The RAG Workflow: From PDF to Conversation</h3>
+                            <p>During the conference, I walked through a demo app that I built that handles the entire RAG process. We broke the architecture down into four primary technical steps:</p>
+
+                            <h4>1. PDF Parsing & Chunking</h4>
+                            <p>The process begins by extracting raw text from uploaded clinical PDFs. However, raw text isn't enough; we have to split it into chunks.</p>
+                            <p><strong>The Strategy:</strong> Instead of splitting by word or sentence, we aim for a chunk size that captures sufficient context. Since vector search relies on meaning rather than keywords, the ideal chunk size is crucial for ensuring the LLM understands how sentences relate to one another.</p>
+
+                            <h4>2. Embedding & Vector Storage</h4>
+                            <p>Once chunked, the text is converted into vectors—numerical representations of meaning. I used FAISS (Facebook AI Similarity Search) to create a searchable index. This allows the system to perform high-speed similarity searches to find the most relevant document sections based on a user's query.</p>
+
+                            <h4>3. The Conversation Chain</h4>
+                            <p>To make the bot "smart", I initialize a ConversationRetrievalChain. This chain doesn't just look at the current prompt; it considers the conversation history and the context provided by the vector store.</p>
+
+                            <h4>4. The Retriever Interface</h4>
+                            <p>By converting the vector store into a retriever (using as_retriever()), I enable the Large Language Model (LLM) to "fact-check" its responses against the uploaded data. This significantly reduces hallucinations and ensures the chatbot provides information grounded in the specific clinical data provided.</p>
+
+                            <div class="video-embed">
+                                <video controls>
+                                    <source src="chatbot.mov" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </section>
+
+                        <section class="paper-section">
+                            <h3>Key Takeaways</h3>
+                            <p>The demo highlighted that while the RAG logic handles the data, Dash handles the experience. By wrapping complex AI workflows in a clean, interactive interface, we enable researchers to query vast amounts of clinical trial data as easily as sending a text message.</p>
+
+                       </section>
+                    </article>
                 </div>
             </div>
         </div>

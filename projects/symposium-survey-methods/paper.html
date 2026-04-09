@@ -62,12 +62,24 @@
 
                     <p>Responses referring to ethnic groups or skin color such as Black, White, or Hispanic, had to be given their own categories as well. These responses, however, could not be given a three-level classification, as they were already general and did not relate to geographical location. Finally, any responses referring to religion (e.g. Catholic, Muslim) or language (e.g. Urdu Speaking, Francophone) were given their own categories. Certain religious responses could be generalized, such as Catholic, Christian, Evangelist, all stemming from Christianity, however religious classification is not the focus of this paper.</p>
 
+                    <div class="project-svg">
+                        <object data="ethnicity process flowchart.drawio.svg" type="image/svg+xml" class="interactive-svg">
+                            <img src="ethnicity process flowchart.drawio.svg" alt="Ethnicity classification process flowchart">
+                        </object>
+                    </div>
+
                     <p class="paper-note"><strong>Figure:</strong> Categorization process for the ethnicity variable. <em>Note: not sure if this chart should be kept since the other flow chart is more detailed. The other flowchart is more about programming decisions, this one is more about how the categories were made.</em></p>
 
                     <h3>2.3 Programming tools</h3>
                     <p>In terms of programming, this application was developed in Python, with the help of a number of libraries including Pandas, NumPy, and Fuzzy Matching. This code can be found at <a href="https://github.com/cleaaum/iCARE_Sorting_Ethnicity_Country" target="_blank">https://github.com/cleaaum/iCARE_Sorting_Ethnicity_Country</a>. The main data structures used were python dictionaries – these contain a mapping of an ethnic group or category to a list of strings that represent different ways of referring to that category. The dataset containing the ethnicity data is stored in a dataframe and a series of functions are applied to the ethnicity-response column to transform the data into a classified three-level format. This is done through vectorization; a method that doesn't use any loops to process the data to improve the code's runtime and efficiency.</p>
 
                     <p>The following flowchart illustrates the programming process. In step one, the ethnicity response is capitalized, stripped of all punctuation and non-alphabetical characters. In step two, the normalized response is looked up in the ethnicity data dictionary, returning a list of all matches found. If nothing was found, then it attempts to look up the response again, but with fuzzy matching (using the Levenshtein Distance algorithm, with a match ratio accuracy set to 92%) in order to consider similar words and spelling mistakes. This is only done if no match is found previously since this step is computationally expensive. The fourth step adjusts the list of ethnicities found. For example a response that reads "I am Taiwanese (Asian)" will be matched with an ethnicity list of [Taiwanese, Asian] by the algorithm. We simply must remove the second element (Asian) from the list since Taiwanese is more descriptive than Asian. This occurs in a number of cases and is useful to remove redundancies. Once step four is complete, this value [Taiwanese] then becomes the very first level of granularity. We then go to step five to generalize this value to get the second level of granularity, in this case it would be [Eastern Asian]. Finally, we generalize once more to get the third level of granularity [Asian] in step 6. Step seven will simply print out a list of all the ethnicity responses that were not able to get categorized. These can then be added manually to existing categories, or new categories can be created.</p>
+
+                    <div class="project-svg">
+                        <object data="case study flowchart ethnicity paper.drawio.svg" type="image/svg+xml" class="interactive-svg">
+                            <img src="case study flowchart ethnicity paper.drawio.svg" alt="Ethnicity classification programming process flowchart">
+                        </object>
+                    </div>
                 </section>
 
                 <section class="paper-section">
