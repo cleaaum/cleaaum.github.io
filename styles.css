@@ -384,7 +384,25 @@ a[href*="sankey-diagram-best-practices"] .project-image img {
 .project-svg {
     margin-top: 0px;
     padding: 0;
-    border-top: 1px solid var(--border-color);
+}
+
+.project-svg.full-width {
+    width: 100vw;
+    position: relative;
+    left: -12%;
+    /* transform: translateX(-50%); */
+    max-width: 1200px;
+    margin: 0;
+    padding: 0;
+}
+
+.project-svg.full-width .interactive-svg {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    max-height: 950px;
+    overflow: hidden;
 }
 
 .project-svg .interactive-svg {
